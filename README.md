@@ -7,6 +7,7 @@ LearnSphere is a modern, production-style Learning Management System (LMS) engin
 ## 🚀 Key Features
 
 ### 🎓 Student Experience
+
 - **Public Discovery Catalog**: Full-text search, category filters, and difficulty badges.
 - **One-Click Course Enrollment**: Instant enrollment with duplicate conflict protection.
 - **Interactive Course Player**: Module/lesson syllabus sidebar, rich markdown lessons, video embeds, and resource downloads.
@@ -17,6 +18,7 @@ LearnSphere is a modern, production-style Learning Management System (LMS) engin
 - **Notification Center**: Real-time alerts for assignments, evaluation grades, and course announcements.
 
 ### 👨‍🏫 Instructor Hub
+
 - **Teaching Dashboard**: Real-time metrics for authored courses, enrolled students, and pending evaluations.
 - **Multi-Step Course Builder**: Wizard guiding course metadata, curriculum modules, lessons, and assignments.
 - **Publish / Unpublish Controls**: Instantaneous visibility toggle for the public course catalog.
@@ -25,6 +27,7 @@ LearnSphere is a modern, production-style Learning Management System (LMS) engin
 - **Cohort Analytics**: Track student enrollment numbers and completion ratios per course.
 
 ### 👑 Administrator Governance
+
 - **Platform Telemetry**: Holistic counts of users, students, faculty, courses, enrollments, and submissions.
 - **Identity & Access Management**: Search and filter accounts, toggle user active/deactivated status.
 - **Curriculum Quality Oversight**: Review course publication states and feature standout courses.
@@ -51,7 +54,7 @@ LearnSphere is a modern, production-style Learning Management System (LMS) engin
 
 - **Testing & Tooling**:
   - Jest & Supertest Integration Test Suite (25 automated integration tests)
-  - Docker & Docker Compose for MongoDB containerization
+  - Docker & Docker Compose for full-stack local containerization
 
 ---
 
@@ -59,11 +62,11 @@ LearnSphere is a modern, production-style Learning Management System (LMS) engin
 
 To evaluate the application across all roles, use these pre-seeded accounts:
 
-| Role | Email | Password | Permissions |
-| :--- | :--- | :--- | :--- |
-| **👑 Admin** | `admin@learnsphere.com` | `Password123!` | Full platform telemetry, user management, course governance |
-| **👨‍🏫 Instructor** | `instructor@learnsphere.com` | `Password123!` | Course authoring, module/lesson builder, submission grading |
-| **🎓 Student** | `student@learnsphere.com` | `Password123!` | Course enrollment, learning player, assignment submission, quizzes |
+| Role              | Email                        | Password       | Permissions                                                        |
+| :---------------- | :--------------------------- | :------------- | :----------------------------------------------------------------- |
+| **👑 Admin**      | `admin@learnsphere.com`      | `Password123!` | Full platform telemetry, user management, course governance        |
+| **👨‍🏫 Instructor** | `instructor@learnsphere.com` | `Password123!` | Course authoring, module/lesson builder, submission grading        |
+| **🎓 Student**    | `student@learnsphere.com`    | `Password123!` | Course enrollment, learning player, assignment submission, quizzes |
 
 > 💡 **Tip**: The login page at `/login` includes one-click demo buttons that pre-fill these credentials instantly.
 
@@ -116,7 +119,7 @@ Learning-Management-System/
 │   ├── testing.md
 │   ├── risk-analysis.md
 │   └── future-scope.md
-├── docker-compose.yml       # Local MongoDB service orchestration
+├── docker-compose.yml       # Frontend, backend, and MongoDB orchestration
 ├── TODO.md                  # Implementation roadmap & status
 └── README.md                # Comprehensive documentation
 ```
@@ -126,46 +129,72 @@ Learning-Management-System/
 ## ⚡ Quick Start & Setup Instructions
 
 ### 1. Prerequisites
-- **Node.js**: v18 or higher (tested on Node v26)
-- **Docker**: For running MongoDB (or a local MongoDB instance running on `localhost:27017`)
 
-### 2. Start MongoDB Database
-Using Docker Compose:
+- **Docker Engine** with the **Docker Compose** plugin
+
+### 2. Start the Full Stack with Docker
+
+From the repository root:
+
 ```bash
-docker compose up -d
-```
-Verify MongoDB is running:
-```bash
-docker ps
+docker compose up -d --build
 ```
 
-### 3. Backend Setup & Seeding
+This starts:
+
+- Frontend: [http://localhost:5173](http://localhost:5173)
+- Backend API: [http://localhost:5000/api/health](http://localhost:5000/api/health)
+- MongoDB: `localhost:27017` with persistent volume storage
+
+Check service status and logs:
+
 ```bash
-cd backend
+docker compose ps
+docker compose logs -f backend frontend
+```
+
+To populate the database with demo users and courses:
+
+```bash
+docker compose exec backend npm run seed
+```
+
+To stop the stack while keeping MongoDB data:
+
+```bash
+docker compose down
+```
+
+To stop it and delete the MongoDB volume:
+
+```bash
+docker compose down -v
+```
+
+### 3. Run Without Docker
+
+If you prefer local Node.js processes, install **Node.js v18 or higher** and run MongoDB on `localhost:27017`:
+
+```bash
 npm install
-npm run seed     # Populates admin, instructor, student, courses, and quiz data
-npm start        # Starts server on http://localhost:5000
+npm install --prefix backend
+npm install --prefix frontend
+npm run dev
 ```
 
-### 4. Frontend Setup
-In a separate terminal:
-```bash
-cd frontend
-npm install
-npm run dev      # Starts Vite dev server on http://localhost:5173
-```
-
-Now open [http://localhost:5173](http://localhost:5173) in your browser.
+This starts the backend and frontend together. To seed data locally, run `npm run seed` from the repository root.
 
 ---
 
 ## 🧪 Automated Testing
 
 Execute the complete backend integration test suite:
+
 ```bash
 cd backend
 npm test
 ```
+
 This runs 25 automated integration tests covering authentication, RBAC authorization, course authoring, duplicate enrollment rejection, dynamic progress calculation, assignment grading, and server-side quiz scoring.
 
 ---
@@ -173,6 +202,7 @@ This runs 25 automated integration tests covering authentication, RBAC authoriza
 ## 📚 Academic Software Engineering Deliverables
 
 Comprehensive project documentation is maintained in the [`docs/`](./docs) directory:
+
 - [Requirements Specification](./docs/requirements.md)
 - [Functional Requirements](./docs/functional-requirements.md)
 - [Non-Functional Requirements](./docs/non-functional-requirements.md)
