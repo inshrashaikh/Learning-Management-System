@@ -105,15 +105,15 @@ const SubmissionsReview = () => {
         </div>
 
         {/* Filter */}
-        <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200">
+        <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200/90 shadow-2xs">
           {['all', 'submitted', 'graded'].map((tab) => (
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
                 filter === tab
                   ? 'bg-brand-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
               {tab === 'submitted' ? 'Needs Grading' : tab}

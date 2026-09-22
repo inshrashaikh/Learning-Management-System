@@ -73,9 +73,8 @@ const StudentDashboard = () => {
         </div>
         <Link to="/courses">
           <Button
-            variant="outline"
+            variant="outline-white"
             size="sm"
-            className="bg-white/10 text-white border-white/20 hover:bg-white/20"
             icon={BookOpen}
           >
             Browse More Courses

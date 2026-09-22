@@ -80,8 +80,10 @@ const CourseManagement = () => {
             <button
               key={s}
               onClick={() => setStatus(s)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-colors ${
-                status === s ? 'bg-brand-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
+                status === s
+                  ? 'bg-brand-600 text-white shadow-sm border border-brand-600'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               {s}
@@ -132,11 +134,13 @@ const CourseManagement = () => {
                     <td className="p-4">
                       <button
                         onClick={() => handleToggleFeatured(c)}
-                        className={`flex items-center gap-1 text-xs font-semibold p-1 rounded-lg ${
-                          c.isFeatured ? 'text-amber-600 bg-amber-50' : 'text-slate-400 hover:bg-slate-100'
+                        className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg border transition-colors ${
+                          c.isFeatured
+                            ? 'text-amber-800 bg-amber-50 border-amber-300'
+                            : 'text-slate-600 bg-slate-50 border-slate-200 hover:bg-slate-100 hover:text-slate-900'
                         }`}
                       >
-                        <Star className={`w-4 h-4 ${c.isFeatured ? 'fill-amber-500 text-amber-500' : ''}`} />
+                        <Star className={`w-3.5 h-3.5 ${c.isFeatured ? 'fill-amber-500 text-amber-500' : 'text-slate-400'}`} />
                         <span>{c.isFeatured ? 'Featured' : 'Standard'}</span>
                       </button>
                     </td>

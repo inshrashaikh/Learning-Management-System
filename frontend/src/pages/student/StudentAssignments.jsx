@@ -129,15 +129,15 @@ const StudentAssignments = () => {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200">
+        <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200/90 shadow-2xs">
           {['all', 'pending', 'submitted', 'graded'].map((tab) => (
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
                 filter === tab
                   ? 'bg-brand-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
               }`}
             >
               {tab}
@@ -271,7 +271,7 @@ const StudentAssignments = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Your Submission Response / Written Solution *
               </label>
               <textarea
@@ -280,12 +280,12 @@ const StudentAssignments = () => {
                 value={submissionContent}
                 onChange={(e) => setSubmissionContent(e.target.value)}
                 placeholder="Type your response, architectural analysis, or paste your repository link..."
-                className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full p-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Attachment / Artifact URL (Optional)
               </label>
               <input
@@ -293,7 +293,7 @@ const StudentAssignments = () => {
                 value={attachmentUrl}
                 onChange={(e) => setAttachmentUrl(e.target.value)}
                 placeholder="https://github.com/user/project or Google Drive link"
-                className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
               />
             </div>
 

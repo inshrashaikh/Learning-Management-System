@@ -63,9 +63,9 @@ const Register = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white py-8 px-6 shadow-card rounded-2xl border border-slate-200/80 sm:px-10 space-y-6">
+        <div className="bg-white py-8 px-6 shadow-card rounded-2xl border border-slate-200/90 sm:px-10 space-y-6">
           {errorMessage && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs font-medium text-rose-700 animate-shake">
+            <div className="p-3 bg-rose-50 border border-rose-300 rounded-xl text-xs font-semibold text-rose-800 animate-shake">
               {errorMessage}
             </div>
           )}
@@ -73,7 +73,7 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Account Role Selector */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Registering As
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -82,8 +82,8 @@ const Register = () => {
                   onClick={() => setRole('student')}
                   className={`p-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                     role === 'student'
-                      ? 'bg-brand-50 border-brand-500 text-brand-700 ring-2 ring-brand-500/20'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? 'bg-brand-50 border-brand-500 text-brand-700 ring-2 ring-brand-500/20 shadow-xs'
+                      : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                   }`}
                 >
                   <GraduationCap className="w-4 h-4" />
@@ -94,8 +94,8 @@ const Register = () => {
                   onClick={() => setRole('instructor')}
                   className={`p-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                     role === 'instructor'
-                      ? 'bg-brand-50 border-brand-500 text-brand-700 ring-2 ring-brand-500/20'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? 'bg-brand-50 border-brand-500 text-brand-700 ring-2 ring-brand-500/20 shadow-xs'
+                      : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900'
                   }`}
                 >
                   <BookOpen className="w-4 h-4" />
@@ -106,7 +106,7 @@ const Register = () => {
 
             {/* Name */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Full Name</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name</label>
               <div className="relative">
                 <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -115,14 +115,14 @@ const Register = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Jordan Taylor"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                 />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Email Address
               </label>
               <div className="relative">
@@ -133,14 +133,14 @@ const Register = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Password</label>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">Password</label>
               <div className="relative">
                 <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -149,7 +149,7 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Minimum 6 characters"
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                 />
               </div>
             </div>

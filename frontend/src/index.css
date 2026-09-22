@@ -6,13 +6,25 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased min-h-screen;
+    @apply bg-slate-50 text-slate-900 font-sans antialiased min-h-screen selection:bg-brand-100 selection:text-brand-900;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.02em;
+  }
+
+  /* Form control baseline refinements */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  input[type="number"],
+  input[type="search"],
+  textarea,
+  select {
+    @apply transition-colors duration-150 text-slate-900 placeholder:text-slate-400;
   }
 }
 
@@ -35,14 +47,26 @@
   background: #94a3b8;
 }
 
+/* Subtle elevation and glass cards */
 .glass-card {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
 .dark-glass-card {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.9);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.6);
+  border: 1px solid rgba(51, 65, 85, 0.7);
+}
+
+/* Button & Interactive micro-enhancements */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
 }

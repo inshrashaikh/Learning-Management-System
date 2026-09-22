@@ -292,8 +292,8 @@ const CourseBuilder = () => {
                   isActive
                     ? 'text-brand-600'
                     : isDone
-                    ? 'text-emerald-600'
-                    : 'text-slate-400 hover:text-slate-600'
+                    ? 'text-emerald-700'
+                    : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
                 <div
@@ -301,8 +301,8 @@ const CourseBuilder = () => {
                     isActive
                       ? 'bg-brand-600 text-white shadow-sm'
                       : isDone
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'bg-slate-100 text-slate-500'
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : 'bg-slate-100 text-slate-700 border border-slate-200'
                   }`}
                 >
                   {isDone ? '✓' : s.num}

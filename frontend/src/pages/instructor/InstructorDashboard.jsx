@@ -70,7 +70,7 @@ const InstructorDashboard = () => {
         <div className="flex items-center gap-3">
           <Link to="/instructor/courses/new">
             <Button
-              variant="secondary"
+              variant="white"
               size="sm"
               icon={PlusCircle}
             >
@@ -79,9 +79,8 @@ const InstructorDashboard = () => {
           </Link>
           <Link to="/instructor/submissions">
             <Button
-              variant="outline"
+              variant="outline-white"
               size="sm"
-              className="bg-white/10 text-white border-white/30 hover:bg-white/20"
               icon={FileCheck}
             >
               Grade Queue ({pendingSubmissions.length})

@@ -81,8 +81,10 @@ const UserManagement = () => {
             <button
               key={r}
               onClick={() => setRole(r)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-colors ${
-                role === r ? 'bg-brand-600 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
+                role === r
+                  ? 'bg-brand-600 text-white shadow-sm border border-brand-600'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:text-slate-900'
               }`}
             >
               {r}

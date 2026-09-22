@@ -359,8 +359,8 @@ const QuizRunner = () => {
                 isCurrent
                   ? 'bg-brand-600 text-white ring-2 ring-brand-400/40 shadow-sm'
                   : isAnswered
-                  ? 'bg-emerald-50 border border-emerald-300 text-emerald-800'
-                  : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-50'
+                  ? 'bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold'
+                  : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
               {idx + 1}
@@ -370,13 +370,13 @@ const QuizRunner = () => {
       </div>
 
       {/* Active Question Card */}
-      <Card className="shadow-elevated">
+      <Card className="shadow-elevated border-slate-200/90">
         <CardBody className="space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <Badge variant="indigo">
               Question {currentQuestionIndex + 1} of {questions.length}
             </Badge>
-            <span className="text-xs font-semibold text-slate-500">
+            <span className="text-xs font-semibold text-slate-600">
               Worth {currentQuestion.marks || 1} mark(s)
             </span>
           </div>
@@ -397,19 +397,19 @@ const QuizRunner = () => {
                   onClick={() => handleSelectOption(currentQuestion._id, optIdx)}
                   className={`w-full flex items-center justify-between p-4 rounded-xl border text-left text-sm transition-all ${
                     isSelected
-                      ? 'bg-brand-50 border-brand-500 text-brand-900 font-semibold ring-2 ring-brand-500/20'
-                      : 'border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700'
+                      ? 'bg-brand-50 border-brand-500 text-brand-950 font-semibold ring-2 ring-brand-500/20 shadow-xs'
+                      : 'bg-white border-slate-300 hover:bg-slate-50 hover:border-slate-400 text-slate-800'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold uppercase ${
-                        isSelected ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600'
+                        isSelected ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'
                       }`}
                     >
                       {String.fromCharCode(65 + optIdx)}
                     </div>
-                    <span>{option}</span>
+                    <span className="font-medium">{option}</span>
                   </div>
                   {isSelected && <CheckCircle2 className="w-4 h-4 text-brand-600 shrink-0 ml-2" />}
                 </button>

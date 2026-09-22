@@ -30,13 +30,14 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-xl' }) => {
 
       {/* Modal Dialog */}
       <div
-        className={`relative w-full ${maxWidth} bg-white rounded-2xl shadow-2xl border border-slate-200 z-10 overflow-hidden transform transition-all animate-scale-up`}
+        className={`relative w-full ${maxWidth} bg-white rounded-3xl shadow-2xl border border-slate-200/90 z-10 overflow-hidden transform transition-all animate-scale-up`}
       >
         <div className="flex items-center justify-between p-5 border-b border-slate-100">
           <h3 className="text-lg font-bold text-slate-900">{title}</h3>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 rounded-lg p-1 hover:bg-slate-100 transition-colors"
+            aria-label="Close dialog"
+            className="text-slate-500 hover:text-slate-800 rounded-xl p-1.5 hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-brand-500"
           >
             <X className="w-5 h-5" />
           </button>

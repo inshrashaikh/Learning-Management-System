@@ -105,16 +105,16 @@ const DashboardShell = ({ portalTitle, roleBadgeVariant, navItems, children }) =
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                   isActive
                     ? 'bg-brand-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/90'
                 }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />
                 <span>{item.label}</span>
                 {item.badge && (
-                  <span className="ml-auto px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-slate-300">
+                  <span className="ml-auto px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-slate-200 border border-slate-700">
                     {item.badge}
                   </span>
                 )}
@@ -124,7 +124,7 @@ const DashboardShell = ({ portalTitle, roleBadgeVariant, navItems, children }) =
         </div>
 
         {/* Bottom User info */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/40 flex items-center justify-between">
+        <div className="p-4 border-t border-slate-800 bg-slate-950/50 flex items-center justify-between">
           <div className="flex items-center gap-2.5 overflow-hidden">
             <img
               src={
@@ -136,12 +136,13 @@ const DashboardShell = ({ portalTitle, roleBadgeVariant, navItems, children }) =
             />
             <div className="truncate text-xs">
               <div className="font-semibold text-white truncate">{user?.name}</div>
-              <div className="text-slate-500 truncate">{user?.email}</div>
+              <div className="text-slate-400 truncate">{user?.email}</div>
             </div>
           </div>
           <button
             onClick={handleLogout}
             title="Log out"
+            aria-label="Log out"
             className="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
           >
             <LogOut className="w-4 h-4" />
@@ -263,8 +264,12 @@ const DashboardShell = ({ portalTitle, roleBadgeVariant, navItems, children }) =
           />
           <div className="relative w-64 bg-slate-900 text-slate-300 flex flex-col h-full z-10">
             <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800">
-              <span className="font-bold text-white">Menu</span>
-              <button onClick={() => setMobileOpen(false)} className="text-slate-400">
+              <span className="font-bold text-white tracking-tight">Navigation</span>
+              <button
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+                className="text-slate-400 hover:text-white p-1 rounded-lg"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -277,8 +282,8 @@ const DashboardShell = ({ portalTitle, roleBadgeVariant, navItems, children }) =
                     key={item.path}
                     to={item.path}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-                      isActive ? 'bg-brand-600 text-white' : 'text-slate-400 hover:text-white'
+                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                      isActive ? 'bg-brand-600 text-white shadow-sm' : 'text-slate-300 hover:text-white hover:bg-slate-800'
                     }`}
                   >
                     <Icon className="w-4 h-4 shrink-0" />
@@ -290,7 +295,7 @@ const DashboardShell = ({ portalTitle, roleBadgeVariant, navItems, children }) =
             <div className="p-4 border-t border-slate-800">
               <button
                 onClick={handleLogout}
-                className="w-full py-2 px-3 rounded-xl bg-slate-800 text-rose-400 text-xs font-semibold flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-3 rounded-xl bg-slate-800/90 hover:bg-rose-950/40 text-rose-300 hover:text-rose-200 text-xs font-semibold flex items-center justify-center gap-2 border border-rose-900/30 transition-colors"
               >
                 <LogOut className="w-4 h-4" /> Log Out
               </button>

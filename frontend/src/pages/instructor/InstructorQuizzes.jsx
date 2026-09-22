@@ -188,7 +188,8 @@ const InstructorQuizzes = () => {
                   </span>
                   <button
                     onClick={() => handleDeleteQuiz(quiz._id)}
-                    className="text-slate-400 hover:text-rose-600 p-1"
+                    aria-label="Delete quiz"
+                    className="p-1.5 text-slate-500 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

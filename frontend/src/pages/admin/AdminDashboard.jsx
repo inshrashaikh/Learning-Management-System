@@ -59,7 +59,7 @@ const AdminDashboard = () => {
         </div>
         <div className="flex items-center gap-3">
           <Link to="/admin/users">
-            <Button variant="outline" size="sm" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+            <Button variant="outline-white" size="sm">
               Manage Users
             </Button>
           </Link>

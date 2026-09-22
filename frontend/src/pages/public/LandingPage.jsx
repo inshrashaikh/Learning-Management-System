@@ -553,15 +553,14 @@ const LandingPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link to="/register">
-              <Button variant="secondary" size="lg">
+              <Button variant="white" size="lg">
                 Create Free Account
               </Button>
             </Link>
             <Link to="/courses">
               <Button
-                variant="outline"
+                variant="outline-white"
                 size="lg"
-                className="bg-transparent text-white border-white/40 hover:bg-white/10"
               >
                 Browse Curriculums
               </Button>

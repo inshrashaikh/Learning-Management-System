@@ -50,7 +50,7 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors"
+                className="text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"
               >
                 {link.name}
               </a>
@@ -76,7 +76,8 @@ const Navbar = () => {
                 <button
                   onClick={logout}
                   title="Log out"
-                  className="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
+                  aria-label="Log out"
+                  className="p-2 text-slate-500 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -101,7 +102,8 @@ const Navbar = () => {
           <div className="flex md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              aria-label="Toggle Navigation Menu"
+              className="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -117,7 +119,7 @@ const Navbar = () => {
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600"
+              className="block px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand-600"
             >
               {link.name}
             </a>

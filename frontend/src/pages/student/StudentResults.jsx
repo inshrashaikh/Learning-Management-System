@@ -47,23 +47,23 @@ const StudentResults = () => {
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200">
+        <div className="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-slate-200/90 shadow-2xs">
           <button
             onClick={() => setActiveTab('assignments')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'assignments'
                 ? 'bg-brand-600 text-white shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             Assignments ({gradedAssignments.length})
           </button>
           <button
             onClick={() => setActiveTab('quizzes')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === 'quizzes'
                 ? 'bg-brand-600 text-white shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
             }`}
           >
             Quizzes ({results.quizzes.length})

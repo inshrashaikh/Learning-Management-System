@@ -117,7 +117,7 @@ const UserProfile = ({ portalRole = 'student' }) => {
             <CardBody>
               <form onSubmit={handleProfileSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Full Name
                   </label>
                   <input
@@ -125,12 +125,12 @@ const UserProfile = ({ portalRole = 'student' }) => {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Professional Headline / Major
                   </label>
                   <input
@@ -138,12 +138,12 @@ const UserProfile = ({ portalRole = 'student' }) => {
                     value={headline}
                     onChange={(e) => setHeadline(e.target.value)}
                     placeholder="e.g. Senior CS Student / Lead Architect"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Avatar Image URL
                   </label>
                   <input
@@ -151,12 +151,12 @@ const UserProfile = ({ portalRole = 'student' }) => {
                     value={avatar}
                     onChange={(e) => setAvatar(e.target.value)}
                     placeholder="https://..."
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Biography / Academic Background
                   </label>
                   <textarea
@@ -164,7 +164,7 @@ const UserProfile = ({ portalRole = 'student' }) => {
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     placeholder="Tell your peers and instructors about yourself..."
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                   />
                 </div>
 
@@ -194,7 +194,7 @@ const UserProfile = ({ portalRole = 'student' }) => {
             <CardBody>
               <form onSubmit={handlePasswordSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Current Password
                   </label>
                   <input
@@ -203,13 +203,13 @@ const UserProfile = ({ portalRole = 'student' }) => {
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
                       New Password
                     </label>
                     <input
@@ -218,11 +218,11 @@ const UserProfile = ({ portalRole = 'student' }) => {
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Minimum 6 chars"
-                      className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
                       Confirm New Password
                     </label>
                     <input
@@ -231,7 +231,7 @@ const UserProfile = ({ portalRole = 'student' }) => {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Repeat new password"
-                      className="w-full p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      className="w-full p-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                     />
                   </div>
                 </div>

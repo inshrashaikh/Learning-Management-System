@@ -170,8 +170,9 @@ const CourseList = () => {
 
                   <button
                     onClick={() => setDeleteModalCourse(course)}
-                    className="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
+                    className="p-2 text-slate-500 hover:text-rose-600 rounded-xl hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors"
                     title="Delete Course"
+                    aria-label="Delete Course"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

@@ -252,11 +252,11 @@ const CourseDetail = () => {
                 {courseData.modules?.map((mod, modIdx) => (
                   <div
                     key={mod._id}
-                    className="border border-slate-200 rounded-2xl bg-white overflow-hidden shadow-subtle transition-all"
+                    className="border border-slate-200/90 rounded-2xl bg-white overflow-hidden shadow-card transition-all"
                   >
                     <button
                       onClick={() => toggleModule(mod._id)}
-                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left bg-slate-50/70 hover:bg-slate-100/70 transition-colors"
+                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left bg-slate-50/80 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
                     >
                       <div className="space-y-0.5">
                         <div className="text-sm font-bold text-slate-900">{mod.title}</div>
@@ -265,11 +265,11 @@ const CourseDetail = () => {
                         )}
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-slate-500 font-medium">
+                        <span className="text-xs text-slate-600 font-semibold">
                           {mod.lessons?.length || 0} lessons
                         </span>
                         <ChevronDown
-                          className={`w-4 h-4 text-slate-400 transition-transform ${
+                          className={`w-4 h-4 text-slate-500 transition-transform ${
                             expandedModules[mod._id] ? 'rotate-180' : ''
                           }`}
                         />
