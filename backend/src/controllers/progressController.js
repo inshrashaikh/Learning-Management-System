@@ -147,15 +147,19 @@ exports.getStudentOverallAnalytics = async (req, res, next) => {
       gradedAssignmentsCount: gradedSubmissions.length,
       totalQuizAttempts: quizAttempts.length,
       passedQuizzesCount: passedQuizzes,
-      courseProgressDetails: enrollments.map((e) => {
-        const prog = progressList.find((p) => p.courseId.toString() === e.courseId?._id.toString());
-        return {
-          course: e.courseId,
-          percentage: prog ? prog.percentage : 0,
-          completedLessonsCount: prog ? prog.completedLessons.length : 0,
-          isCompleted: prog ? prog.isCompleted : false
-        };
-      })
+      courseProgressDetails: enrollments
+        .filter((e) => e.courseId)
+        .map((e) => {
+          const prog = progressList.find(
+            (p) => p.courseId && e.courseId._id && p.courseId.toString() === e.courseId._id.toString()
+          );
+          return {
+            course: e.courseId,
+            percentage: prog ? prog.percentage : 0,
+            completedLessonsCount: prog && prog.completedLessons ? prog.completedLessons.length : 0,
+            isCompleted: prog ? Boolean(prog.isCompleted) : false
+          };
+        })
     });
   } catch (error) {
     next(error);

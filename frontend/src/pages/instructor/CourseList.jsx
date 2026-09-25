@@ -27,6 +27,7 @@ const CourseList = () => {
   const toast = useToast();
 
   const [deleteModalCourse, setDeleteModalCourse] = useState(null);
+  const [studentsModalCourse, setStudentsModalCourse] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
   const fetchCourses = async () => {
@@ -146,7 +147,16 @@ const CourseList = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 w-full md:w-auto justify-end pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
+                <div className="flex items-center gap-2 w-full md:w-auto justify-end pt-2 md:pt-0 border-t md:border-t-0 border-slate-100 flex-wrap">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    icon={Users}
+                    onClick={() => setStudentsModalCourse(course)}
+                  >
+                    Students ({course.studentCount || 0})
+                  </Button>
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -181,6 +191,79 @@ const CourseList = () => {
             );
           })}
         </div>
+      )}
+
+      {/* Enrolled Students Modal */}
+      {studentsModalCourse && (
+        <Modal
+          isOpen={!!studentsModalCourse}
+          onClose={() => setStudentsModalCourse(null)}
+          title={`Enrolled Students — ${studentsModalCourse.title}`}
+          maxWidth="max-w-2xl"
+        >
+          <div className="space-y-4">
+            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between text-xs">
+              <div>
+                <span className="font-bold text-slate-900 block">
+                  COURSE: {studentsModalCourse.title}
+                </span>
+                <span className="text-slate-500">
+                  Code: <span className="font-semibold text-slate-700">{studentsModalCourse.courseCode || `CRS-${studentsModalCourse._id?.slice(-4).toUpperCase()}`}</span>
+                </span>
+              </div>
+              <Badge variant="indigo">
+                {(studentsModalCourse.enrolledStudents || []).length} Enrolled
+              </Badge>
+            </div>
+
+            {(studentsModalCourse.enrolledStudents || []).length === 0 ? (
+              <div className="p-8 text-center text-xs text-slate-400">
+                No students enrolled in this course yet.
+              </div>
+            ) : (
+              <div className="overflow-x-auto rounded-xl border border-slate-100">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
+                    <tr>
+                      <th className="p-3 w-10 text-center">#</th>
+                      <th className="p-3">Student Name</th>
+                      <th className="p-3">Roll No / ID</th>
+                      <th className="p-3">Email</th>
+                      <th className="p-3">Enrolled</th>
+                      <th className="p-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 font-medium">
+                    {studentsModalCourse.enrolledStudents.map((st, idx) => (
+                      <tr key={st._id || idx} className="hover:bg-slate-50/80">
+                        <td className="p-3 text-center text-slate-400 font-bold">{idx + 1}</td>
+                        <td className="p-3 font-bold text-slate-900">{st.name}</td>
+                        <td className="p-3 font-mono text-[11px] text-slate-600">
+                          {st.rollNumber || `STU-${String(st._id).slice(-4).toUpperCase()}`}
+                        </td>
+                        <td className="p-3 text-slate-500">{st.email}</td>
+                        <td className="p-3 text-slate-500">
+                          {st.enrolledAt ? new Date(st.enrolledAt).toLocaleDateString() : 'N/A'}
+                        </td>
+                        <td className="p-3">
+                          <Badge variant={st.status === 'completed' ? 'emerald' : 'indigo'} size="sm">
+                            {st.status || 'active'}
+                          </Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-3 border-t border-slate-100">
+              <Button variant="outline" size="sm" onClick={() => setStudentsModalCourse(null)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </Modal>
       )}
 
       {/* Delete Confirmation Modal */}

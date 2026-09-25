@@ -2,6 +2,9 @@ const Course = require('../models/Course');
 const Module = require('../models/Module');
 const Lesson = require('../models/Lesson');
 const Enrollment = require('../models/Enrollment');
+const Progress = require('../models/Progress');
+const Assignment = require('../models/Assignment');
+const Quiz = require('../models/Quiz');
 const AppError = require('../utils/appError');
 const { successResponse } = require('../utils/apiResponse');
 
@@ -215,16 +218,51 @@ exports.getInstructorCourses = async (req, res, next) => {
 
     const enhanced = await Promise.all(
       courses.map(async (c) => {
-        const [moduleCount, lessonCount, studentCount] = await Promise.all([
-          Module.countDocuments({ courseId: c._id }),
-          Lesson.countDocuments({ courseId: c._id }),
-          Enrollment.countDocuments({ courseId: c._id })
-        ]);
+        const [moduleCount, lessonCount, studentCount, assignmentCount, quizCount, enrollments] =
+          await Promise.all([
+            Module.countDocuments({ courseId: c._id }),
+            Lesson.countDocuments({ courseId: c._id }),
+            Enrollment.countDocuments({ courseId: c._id, status: { $ne: 'dropped' } }),
+            Assignment.countDocuments({ courseId: c._id }),
+            Quiz.countDocuments({ courseId: c._id }),
+            Enrollment.find({ courseId: c._id, status: { $ne: 'dropped' } })
+              .populate('studentId', 'name email avatar headline createdAt')
+              .sort({ createdAt: -1 })
+              .lean()
+          ]);
+
+        const validEnrollments = enrollments.filter((enr) => enr.studentId);
+        const enrolledStudents = await Promise.all(
+          validEnrollments.map(async (enr) => {
+            const prog = await Progress.findOne({
+              studentId: enr.studentId._id,
+              courseId: c._id
+            }).lean();
+
+            return {
+              _id: enr.studentId._id,
+              enrollmentId: enr._id,
+              name: enr.studentId.name,
+              email: enr.studentId.email,
+              avatar: enr.studentId.avatar,
+              headline: enr.studentId.headline,
+              enrolledAt: enr.enrolledAt || enr.createdAt,
+              status: enr.status,
+              progress: prog ? prog.percentage : 0,
+              rollNumber: `STU-${String(enr.studentId._id).slice(-4).toUpperCase()}`
+            };
+          })
+        );
+
         return {
           ...c,
+          courseCode: `CRS-${String(c._id).slice(-4).toUpperCase()}`,
           moduleCount,
           lessonCount,
-          studentCount
+          studentCount,
+          assignmentCount,
+          quizCount,
+          enrolledStudents
         };
       })
     );

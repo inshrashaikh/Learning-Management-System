@@ -160,18 +160,38 @@ const StudentDashboard = () => {
                 </div>
                 <div className="sm:col-span-7 p-6 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <Badge variant="indigo">{activeEnrollment.courseId?.category}</Badge>
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                        {activeEnrollment.courseCode || `CRS-${activeEnrollment.courseId?._id?.slice(-4).toUpperCase()}`}
+                      </span>
+                      <Badge variant={activeEnrollment.status === 'completed' ? 'emerald' : 'indigo'} size="sm">
+                        {activeEnrollment.status || 'active'}
+                      </Badge>
                       <span className="text-xs text-slate-400 capitalize">
                         {activeEnrollment.courseId?.difficulty}
                       </span>
                     </div>
+
                     <h3 className="text-base font-bold text-slate-900 line-clamp-2">
                       {activeEnrollment.courseId?.title}
                     </h3>
+
+                    {activeEnrollment.courseId?.instructor?.name && (
+                      <p className="text-xs font-medium text-slate-600">
+                        Instructor: <span className="font-semibold text-slate-800">{activeEnrollment.courseId.instructor.name}</span>
+                      </p>
+                    )}
+
                     <p className="text-xs text-slate-500 line-clamp-2">
                       {activeEnrollment.courseId?.shortDescription}
                     </p>
+
+                    {activeEnrollment.activities && (
+                      <div className="text-[11px] text-brand-600 font-semibold pt-1">
+                        {activeEnrollment.activities.lessonCount || 0} Lessons • {activeEnrollment.activities.assignmentCount || 0} Assignments • {activeEnrollment.activities.quizCount || 0} Quizzes
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-3 pt-2">
@@ -192,7 +212,7 @@ const StudentDashboard = () => {
             </Card>
           ) : (
             <Card className="p-8 text-center space-y-4">
-              <p className="text-sm text-slate-500">You are not actively enrolled in any courses yet.</p>
+              <p className="text-sm text-slate-500">No courses enrolled yet.</p>
               <Link to="/courses">
                 <Button variant="primary" size="sm">
                   Explore Curriculums
@@ -209,12 +229,22 @@ const StudentDashboard = () => {
                 {enrollments.slice(1, 3).map((enr) => (
                   <Card key={enr._id} hover className="p-4 flex flex-col justify-between space-y-3">
                     <div className="space-y-1">
-                      <Badge variant="slate" size="sm">
-                        {enr.courseId?.category}
-                      </Badge>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <Badge variant="slate" size="sm">
+                          {enr.courseId?.category}
+                        </Badge>
+                        <span className="text-[10px] font-semibold text-slate-500">
+                          {enr.courseCode || `CRS-${enr.courseId?._id?.slice(-4).toUpperCase()}`}
+                        </span>
+                      </div>
                       <h4 className="text-sm font-bold text-slate-900 line-clamp-1">
                         {enr.courseId?.title}
                       </h4>
+                      {enr.courseId?.instructor?.name && (
+                        <p className="text-[11px] text-slate-500">
+                          Instructor: {enr.courseId.instructor.name}
+                        </p>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <ProgressBar value={enr.progress?.percentage || 0} size="sm" />

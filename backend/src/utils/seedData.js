@@ -13,12 +13,12 @@ const Question = require('../models/Question');
 const QuizAttempt = require('../models/QuizAttempt');
 const Notification = require('../models/Notification');
 
-const seedDatabase = async () => {
+/**
+ * Core seeding logic — can be called when Mongoose is already connected.
+ * Exported for use by server.js auto-seed.
+ */
+const runSeed = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/learnsphere';
-    await mongoose.connect(mongoUri);
-    console.log(`[Seed] Connected to MongoDB: ${mongoUri}`);
-
     // Clear existing data cleanly
     await Promise.all([
       User.deleteMany({}),
@@ -559,7 +559,21 @@ Attached is the OpenAPI specification link and test suite summary: https://githu
     console.log('   Email:    student@learnsphere.com');
     console.log('   Password: Password123!');
     console.log('=============================================\n');
+  } catch (error) {
+    console.error('[Seed Error]', error);
+    throw error;
+  }
+};
 
+/**
+ * Standalone CLI entry point: connects to MongoDB, seeds, and exits.
+ */
+const seedDatabase = async () => {
+  try {
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/learnsphere';
+    await mongoose.connect(mongoUri);
+    console.log(`[Seed] Connected to MongoDB: ${mongoUri}`);
+    await runSeed();
     process.exit(0);
   } catch (error) {
     console.error('[Seed Error]', error);
@@ -567,4 +581,10 @@ Attached is the OpenAPI specification link and test suite summary: https://githu
   }
 };
 
-seedDatabase();
+// Export for reuse by server.js
+module.exports = { runSeed };
+
+// Run directly when invoked as a script (e.g. `node src/utils/seedData.js`)
+if (require.main === module) {
+  seedDatabase();
+}

@@ -1,6 +1,10 @@
 const Enrollment = require('../models/Enrollment');
 const Course = require('../models/Course');
 const Progress = require('../models/Progress');
+const Module = require('../models/Module');
+const Lesson = require('../models/Lesson');
+const Assignment = require('../models/Assignment');
+const Quiz = require('../models/Quiz');
 const AppError = require('../utils/appError');
 const { successResponse } = require('../utils/apiResponse');
 const { createNotification } = require('../services/notificationService');
@@ -77,18 +81,28 @@ exports.getMyEnrollments = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .lean();
 
-    // Attach progress to each enrolled course
+    // Attach progress, activities, and course code to each enrolled course
     const results = await Promise.all(
       enrollments.map(async (enr) => {
         if (!enr.courseId) return null;
-        const prog = await Progress.findOne({
-          studentId,
-          courseId: enr.courseId._id
-        }).lean();
+        const [prog, assignmentCount, quizCount, moduleCount, lessonCount] = await Promise.all([
+          Progress.findOne({ studentId, courseId: enr.courseId._id }).lean(),
+          Assignment.countDocuments({ courseId: enr.courseId._id, status: 'published' }),
+          Quiz.countDocuments({ courseId: enr.courseId._id, status: 'published' }),
+          Module.countDocuments({ courseId: enr.courseId._id }),
+          Lesson.countDocuments({ courseId: enr.courseId._id })
+        ]);
 
         return {
           ...enr,
-          progress: prog || { percentage: 0, completedLessons: [] }
+          courseCode: `CRS-${String(enr.courseId._id).slice(-4).toUpperCase()}`,
+          progress: prog || { percentage: 0, completedLessons: [] },
+          activities: {
+            assignmentCount,
+            quizCount,
+            moduleCount,
+            lessonCount
+          }
         };
       })
     );
@@ -113,14 +127,15 @@ exports.getCourseEnrollments = async (req, res, next) => {
       return next(new AppError('Unauthorized to view enrollments for this course', 403));
     }
 
-    const enrollments = await Enrollment.find({ courseId })
-      .populate('studentId', 'name email avatar')
+    const enrollments = await Enrollment.find({ courseId, status: { $ne: 'dropped' } })
+      .populate('studentId', 'name email avatar headline')
       .sort({ createdAt: -1 })
       .lean();
 
-    // Attach each student's progress
+    // Attach each student's progress and roll number
+    const validEnrollments = enrollments.filter((enr) => enr.studentId);
     const enriched = await Promise.all(
-      enrollments.map(async (enr) => {
+      validEnrollments.map(async (enr) => {
         const prog = await Progress.findOne({
           studentId: enr.studentId._id,
           courseId
@@ -128,6 +143,7 @@ exports.getCourseEnrollments = async (req, res, next) => {
 
         return {
           ...enr,
+          rollNumber: `STU-${String(enr.studentId._id).slice(-4).toUpperCase()}`,
           progress: prog ? prog.percentage : 0
         };
       })

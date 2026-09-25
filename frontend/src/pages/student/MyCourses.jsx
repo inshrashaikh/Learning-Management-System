@@ -77,14 +77,29 @@ const MyCourses = () => {
 
                 <CardBody className="flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
-                      <span>{course.category}</span>
-                      <span>•</span>
-                      <span className="capitalize">{course.difficulty}</span>
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-400">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span>{course.category}</span>
+                        <span>•</span>
+                        <span className="capitalize">{course.difficulty}</span>
+                      </div>
+                      <span className="font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full text-[10px]">
+                        {enr.courseCode || `CRS-${course._id?.slice(-4).toUpperCase()}`}
+                      </span>
                     </div>
                     <h3 className="text-base font-bold text-slate-900 line-clamp-2 leading-snug">
                       {course.title}
                     </h3>
+                    {course.instructor?.name && (
+                      <p className="text-xs text-slate-500 font-medium">
+                        Instructor: <span className="font-semibold text-slate-700">{course.instructor.name}</span>
+                      </p>
+                    )}
+                    {enr.activities && (
+                      <div className="text-[11px] text-brand-600 font-semibold pt-0.5">
+                        {enr.activities.lessonCount || 0} Lessons • {enr.activities.assignmentCount || 0} Assignments • {enr.activities.quizCount || 0} Quizzes
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-3 pt-3 border-t border-slate-100">

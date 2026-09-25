@@ -18,23 +18,40 @@ exports.getPlatformStats = async (req, res, next) => {
       totalSubmissions,
       totalQuizAttempts,
       recentUsers,
-      recentEnrollments
+      recentEnrollments,
+      allCourses
     ] = await Promise.all([
       User.countDocuments(),
       User.countDocuments({ role: 'student' }),
       User.countDocuments({ role: 'instructor' }),
       Course.countDocuments(),
       Course.countDocuments({ status: 'published' }),
-      Enrollment.countDocuments(),
+      Enrollment.countDocuments({ status: { $ne: 'dropped' } }),
       Submission.countDocuments(),
       QuizAttempt.countDocuments(),
       User.find().sort({ createdAt: -1 }).limit(5).select('name email role createdAt isActive'),
-      Enrollment.find()
+      Enrollment.find({ status: { $ne: 'dropped' } })
         .populate('studentId', 'name email avatar')
-        .populate('courseId', 'title')
+        .populate('courseId', 'title category')
         .sort({ createdAt: -1 })
-        .limit(5)
+        .limit(6)
+        .lean(),
+      Course.find().populate('instructor', 'name').select('title category instructor status').lean()
     ]);
+
+    const courseEnrollmentCounts = await Promise.all(
+      allCourses.map(async (c) => {
+        const count = await Enrollment.countDocuments({ courseId: c._id, status: { $ne: 'dropped' } });
+        return {
+          _id: c._id,
+          title: c.title,
+          category: c.category,
+          status: c.status,
+          instructorName: c.instructor?.name || 'Faculty Member',
+          enrollmentCount: count
+        };
+      })
+    );
 
     return successResponse(res, 200, 'Platform analytics retrieved', {
       totalUsers,
@@ -46,7 +63,8 @@ exports.getPlatformStats = async (req, res, next) => {
       totalSubmissions,
       totalQuizAttempts,
       recentUsers,
-      recentEnrollments
+      recentEnrollments,
+      courseEnrollmentCounts
     });
   } catch (error) {
     next(error);

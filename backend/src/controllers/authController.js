@@ -66,8 +66,18 @@ exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }).select('+password');
-    if (!user || !(await user.comparePassword(password))) {
+    if (!email || !password) {
+      return next(new AppError('Please provide both email and password.', 400));
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await User.findOne({ email: normalizedEmail }).select('+password');
+    if (!user) {
+      return next(new AppError('Account not found with this email address.', 401));
+    }
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
       return next(new AppError('Invalid email or password.', 401));
     }
 
