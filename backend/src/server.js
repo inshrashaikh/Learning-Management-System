@@ -2,26 +2,33 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const app = require('./app');
 const User = require('./models/User');
+const Course = require('./models/Course');
 const { runSeed } = require('./utils/seedData');
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to Database and auto-seed if empty
+// Connect to Database and auto-seed if demo accounts or curriculum are missing
 const startServer = async () => {
   await connectDB();
 
-  // Auto-seed: if the database has no users, populate demo data automatically
+  // Auto-seed: verify that the default demo accounts and baseline curriculum exist
   try {
-    const userCount = await User.countDocuments();
-    if (userCount === 0) {
-      console.log('[LearnSphere Backend] Empty database detected — running automatic seed...');
+    const [adminUser, instructorUser, studentUser, courseCount] = await Promise.all([
+      User.findOne({ email: 'admin@learnsphere.com' }),
+      User.findOne({ email: 'instructor@learnsphere.com' }),
+      User.findOne({ email: 'student@learnsphere.com' }),
+      Course.countDocuments()
+    ]);
+
+    if (!adminUser || !instructorUser || !studentUser || courseCount === 0) {
+      console.log('[LearnSphere Backend] Default demo accounts or courses missing — running database seed...');
       await runSeed();
       console.log('[LearnSphere Backend] Auto-seed completed. Demo accounts are ready.');
     } else {
-      console.log(`[LearnSphere Backend] Database already has ${userCount} users — skipping seed.`);
+      console.log(`[LearnSphere Backend] Verified demo accounts and ${courseCount} courses present.`);
     }
   } catch (seedError) {
-    console.error('[LearnSphere Backend] Auto-seed failed (non-fatal):', seedError.message);
+    console.error('[LearnSphere Backend] Auto-seed check failed (non-fatal):', seedError.message);
   }
 
   const server = app.listen(PORT, () => {

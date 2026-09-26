@@ -342,9 +342,180 @@ res.cookie('jwt', token, {
       isFreePreview: false
     });
 
-    console.log('[Seed] Modules and Lessons seeded successfully.');
+    // 3b. Create Modules & Lessons for Course 2 (Software Architecture - Instructor 1)
+    const mod2_1 = await Module.create({
+      courseId: course2._id,
+      title: 'Module 1: Domain-Driven Design & Bounded Contexts',
+      description: 'Decomposing complex enterprise systems into autonomous domains and bounded contexts.',
+      order: 1
+    });
+
+    const mod2_2 = await Module.create({
+      courseId: course2._id,
+      title: 'Module 2: Asynchronous Messaging & Event Streams',
+      description: 'Decoupled communication using message queues, Kafka event streams, and the Outbox pattern.',
+      order: 2
+    });
+
+    const lesson2_1_1 = await Lesson.create({
+      courseId: course2._id,
+      moduleId: mod2_1._id,
+      title: '1.1 Strategic Domain Modeling & Aggregate Roots',
+      content: `## Strategic Domain-Driven Design
+
+In distributed software systems, bounded contexts define the explicit boundaries within which a domain model applies.
+
+### Core Concepts:
+- **Entities**: Objects possessing unique identity that persists across state changes.
+- **Value Objects**: Immutable attributes defined solely by their property values.
+- **Aggregate Roots**: Entry-point entities that encapsulate consistency boundaries.`,
+      durationMinutes: 20,
+      order: 1,
+      isFreePreview: true
+    });
+
+    const lesson2_1_2 = await Lesson.create({
+      courseId: course2._id,
+      moduleId: mod2_1._id,
+      title: '1.2 Event Storming & Ubiquitous Language',
+      content: `## Event Storming Workshop Methodology
+
+Collaborative rapid modeling to identify domain events, commands, and read models before writing code.`,
+      durationMinutes: 18,
+      order: 2,
+      isFreePreview: false
+    });
+
+    const lesson2_2_1 = await Lesson.create({
+      courseId: course2._id,
+      moduleId: mod2_2._id,
+      title: '2.1 Message Queues vs Pub/Sub Architectures',
+      content: `## Asynchronous Communication Patterns
+
+Comparing point-to-point queues (RabbitMQ/SQS) with distributed event logs (Apache Kafka).`,
+      durationMinutes: 25,
+      order: 1,
+      isFreePreview: false
+    });
+
+    // 3c. Create Modules & Lessons for Course 3 (Cybersecurity - Instructor 2)
+    const mod3_1 = await Module.create({
+      courseId: course3._id,
+      title: 'Module 1: Application Security & OWASP Top 10',
+      description: 'Recognizing, exploiting, and securing against high-impact web vulnerabilities.',
+      order: 1
+    });
+
+    const mod3_2 = await Module.create({
+      courseId: course3._id,
+      title: 'Module 2: Cryptographic Primitives & Network Defense',
+      description: 'Applied cryptography, TLS handshakes, digital signatures, and defense-in-depth.',
+      order: 2
+    });
+
+    const lesson3_1_1 = await Lesson.create({
+      courseId: course3._id,
+      moduleId: mod3_1._id,
+      title: '1.1 Injection Attacks & Input Sanitization Strategies',
+      content: `## Injection Vulnerabilities and Mitigation
+
+Understanding SQL injection, NoSQL injection, and parameterized queries.`,
+      durationMinutes: 20,
+      order: 1,
+      isFreePreview: true
+    });
+
+    const lesson3_1_2 = await Lesson.create({
+      courseId: course3._id,
+      moduleId: mod3_1._id,
+      title: '1.2 Broken Access Control & Role Governance',
+      content: `## Access Control and Privilege Escalation
+
+Enforcing server-side authorization checks and object-level permission validation.`,
+      durationMinutes: 22,
+      order: 2,
+      isFreePreview: false
+    });
+
+    // 3d. Create Modules & Lessons for Course 4 (Cloud & DevOps - Instructor 2)
+    const mod4_1 = await Module.create({
+      courseId: course4._id,
+      title: 'Module 1: Container Orchestration with Docker',
+      description: 'Designing lightweight container images, multi-stage builds, and volume mounts.',
+      order: 1
+    });
+
+    const mod4_2 = await Module.create({
+      courseId: course4._id,
+      title: 'Module 2: CI/CD Pipelines & Kubernetes Deployment',
+      description: 'Automated test runners, GitHub Actions workflows, and declarative Kubernetes manifests.',
+      order: 2
+    });
+
+    const lesson4_1_1 = await Lesson.create({
+      courseId: course4._id,
+      moduleId: mod4_1._id,
+      title: '1.1 Multi-Stage Docker Builds & Image Optimization',
+      content: `## Multi-Stage Dockerfile Optimization
+
+Multi-stage builds allow developers to drastically reduce final image sizes by isolating the build environment from the lean runtime container.
+
+\`\`\`dockerfile
+# Stage 1: Build
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2: Production Runtime
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+USER node
+CMD ["node", "dist/server.js"]
+\`\`\`
+
+### Advantages:
+- Eliminates devDependencies, compilers, and toolchains from production image
+- Shrinks attack surface against container vulnerabilities
+- Accelerates cluster deployment download speeds`,
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      durationMinutes: 20,
+      order: 1,
+      isFreePreview: true
+    });
+
+    const lesson4_1_2 = await Lesson.create({
+      courseId: course4._id,
+      moduleId: mod4_1._id,
+      title: '1.2 Container Networking & Persistent Volumes',
+      content: `## Docker Bridge Networks & Storage Volumes
+
+Configuring inter-container DNS discovery and managing stateful data persistence.`,
+      durationMinutes: 25,
+      order: 2,
+      isFreePreview: false
+    });
+
+    const lesson4_2_1 = await Lesson.create({
+      courseId: course4._id,
+      moduleId: mod4_2._id,
+      title: '2.1 Automated CI/CD Pipelines with GitHub Actions',
+      content: `## GitHub Actions CI/CD Configuration
+
+Automating linting, integration testing, and Docker Hub image registry publishing on every pull request.`,
+      durationMinutes: 30,
+      order: 1,
+      isFreePreview: false
+    });
+
+    console.log('[Seed] Modules and Lessons seeded successfully across all courses.');
 
     // 4. Create Enrollments and Progress
+    // Student 1 (Jordan Taylor) enrolled in Course 1 and Course 4
     const enrollment1 = await Enrollment.create({
       studentId: student1._id,
       courseId: course1._id,
@@ -359,6 +530,7 @@ res.cookie('jwt', token, {
       enrolledAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
     });
 
+    // Student 2 (Emma Watson) enrolled in Course 1 and Course 3
     const enrollment3 = await Enrollment.create({
       studentId: student2._id,
       courseId: course1._id,
@@ -366,7 +538,30 @@ res.cookie('jwt', token, {
       enrolledAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
     });
 
-    // Seed progress: student 1 has completed lesson1_1 and lesson1_2 (2 of 5 lessons = 40%)
+    const enrollment4 = await Enrollment.create({
+      studentId: student2._id,
+      courseId: course3._id,
+      status: 'active',
+      enrolledAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+    });
+
+    // Student 3 (Liam Smith) enrolled in Course 2 and Course 4
+    const enrollment5 = await Enrollment.create({
+      studentId: student3._id,
+      courseId: course2._id,
+      status: 'active',
+      enrolledAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)
+    });
+
+    const enrollment6 = await Enrollment.create({
+      studentId: student3._id,
+      courseId: course4._id,
+      status: 'active',
+      enrolledAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+    });
+
+    // Seed progress:
+    // Student 1 in Course 1: completed lesson1_1 and lesson1_2 (40%)
     await Progress.create({
       studentId: student1._id,
       courseId: course1._id,
@@ -379,17 +574,66 @@ res.cookie('jwt', token, {
       isCompleted: false
     });
 
+    // Student 1 in Course 4: completed lesson4_1_1 (33%)
     await Progress.create({
       studentId: student1._id,
       courseId: course4._id,
+      completedLessons: [
+        { lessonId: lesson4_1_1._id, completedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) }
+      ],
+      lastAccessedLesson: lesson4_1_2._id,
+      percentage: 33,
+      isCompleted: false
+    });
+
+    // Student 2 in Course 1: completed lesson1_1 (20%)
+    await Progress.create({
+      studentId: student2._id,
+      courseId: course1._id,
+      completedLessons: [
+        { lessonId: lesson1_1._id, completedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) }
+      ],
+      lastAccessedLesson: lesson1_2._id,
+      percentage: 20,
+      isCompleted: false
+    });
+
+    // Student 2 in Course 3: 0%
+    await Progress.create({
+      studentId: student2._id,
+      courseId: course3._id,
       completedLessons: [],
       percentage: 0,
+      isCompleted: false
+    });
+
+    // Student 3 in Course 2: completed lesson2_1_1 (33%)
+    await Progress.create({
+      studentId: student3._id,
+      courseId: course2._id,
+      completedLessons: [
+        { lessonId: lesson2_1_1._id, completedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) }
+      ],
+      percentage: 33,
+      isCompleted: false
+    });
+
+    // Student 3 in Course 4: completed lesson4_1_1 and lesson4_1_2 (67%)
+    await Progress.create({
+      studentId: student3._id,
+      courseId: course4._id,
+      completedLessons: [
+        { lessonId: lesson4_1_1._id, completedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000) },
+        { lessonId: lesson4_1_2._id, completedAt: new Date(Date.now() - 12 * 60 * 60 * 1000) }
+      ],
+      percentage: 67,
       isCompleted: false
     });
 
     console.log('[Seed] Enrollments and Progress seeded successfully.');
 
     // 5. Create Assignments and Submissions
+    // Course 1 Assignments (Instructor 1)
     const assignment1 = await Assignment.create({
       courseId: course1._id,
       moduleId: mod1._id,
@@ -402,7 +646,7 @@ Design a normalized schema and write OpenAPI/REST documentation for a multi-tena
 3. Detail request and response payloads with status codes.
 
 Submit your solution as markdown text or a public repository link below.`,
-      dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days in future
+      dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       maxMarks: 100,
       status: 'published'
     });
@@ -415,6 +659,42 @@ Submit your solution as markdown text or a public repository link below.`,
       description: `Implement a production-grade \`useInfiniteScroll\` React hook with intersection observers and abort controller cleanup.`,
       dueDate: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000),
       maxMarks: 50,
+      status: 'published'
+    });
+
+    // Course 2 Assignment (Instructor 1)
+    const assignment3 = await Assignment.create({
+      courseId: course2._id,
+      moduleId: mod2_1._id,
+      instructorId: instructor1._id,
+      title: 'Assignment 1: Distributed Saga Orchestrator Design',
+      description: `Draft an architectural diagram and execution workflow for an e-commerce checkout saga handling payment, inventory allocation, and fulfillment compensation transactions.`,
+      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      maxMarks: 100,
+      status: 'published'
+    });
+
+    // Course 3 Assignment (Instructor 2)
+    const assignment4 = await Assignment.create({
+      courseId: course3._id,
+      moduleId: mod3_1._id,
+      instructorId: instructor2._id,
+      title: 'Assignment 1: Web Application Threat Model & Remediation',
+      description: `Conduct a STRIDE threat model on an enterprise authentication microservice and document defensive controls for credential stuffing and session hijacking.`,
+      dueDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000),
+      maxMarks: 100,
+      status: 'published'
+    });
+
+    // Course 4 Assignment (Instructor 2)
+    const assignment5 = await Assignment.create({
+      courseId: course4._id,
+      moduleId: mod4_1._id,
+      instructorId: instructor2._id,
+      title: 'Assignment 1: Multi-Stage Docker & Compose Orchestration',
+      description: `Write an optimized multi-stage Dockerfile and docker-compose.yml configuration with healthchecks, environment variable bindings, and isolated internal bridge networks.`,
+      dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
+      maxMarks: 100,
       status: 'published'
     });
 
@@ -445,9 +725,32 @@ Attached is the OpenAPI specification link and test suite summary: https://githu
       status: 'submitted'
     });
 
+    // Student 1 submitted Assignment 5 (pending evaluation by Instructor 2)
+    await Submission.create({
+      assignmentId: assignment5._id,
+      studentId: student1._id,
+      courseId: course4._id,
+      content: `Configured a 2-stage build targeting Alpine Linux, reducing final image footprint by 78%. Added compose healthcheck with curl polling.`,
+      submittedAt: new Date(Date.now() - 14 * 60 * 60 * 1000),
+      isLate: false,
+      status: 'submitted'
+    });
+
+    // Student 3 submitted Assignment 3 (pending evaluation by Instructor 1)
+    await Submission.create({
+      assignmentId: assignment3._id,
+      studentId: student3._id,
+      courseId: course2._id,
+      content: `Designed an orchestrator-based Saga using temporal state machines. Included compensations for out-of-stock items and payment gateway timeouts.`,
+      submittedAt: new Date(Date.now() - 8 * 60 * 60 * 1000),
+      isLate: false,
+      status: 'submitted'
+    });
+
     console.log('[Seed] Assignments and Submissions seeded successfully.');
 
     // 6. Create Quizzes, Questions, and Attempts
+    // Quiz 1 (Course 1 - Instructor 1)
     const quiz1 = await Quiz.create({
       courseId: course1._id,
       moduleId: mod1._id,
@@ -495,6 +798,77 @@ Attached is the OpenAPI specification link and test suite summary: https://githu
       order: 3
     });
 
+    // Quiz 2 (Course 2 - Instructor 1)
+    const quiz2 = await Quiz.create({
+      courseId: course2._id,
+      moduleId: mod2_1._id,
+      instructorId: instructor1._id,
+      title: 'Quiz 1: Microservices & Distributed Consistency',
+      description: 'Assess knowledge on bounded contexts, Saga patterns, and eventual consistency.',
+      durationMinutes: 15,
+      passingScore: 60,
+      totalMarks: 3,
+      status: 'published'
+    });
+
+    await Question.create({
+      quizId: quiz2._id,
+      questionText: 'In Domain-Driven Design, what constitutes an Aggregate Root?',
+      options: [
+        'A database table index',
+        'An entity that manages external access and enforces consistency rules for internal cluster members',
+        'A global application state manager',
+        'An API gateway reverse proxy'
+      ],
+      correctAnswerIndex: 1,
+      explanation: 'An Aggregate Root is the only member of an Aggregate that external objects are permitted to hold a reference to.',
+      marks: 1,
+      order: 1
+    });
+
+    // Quiz 4 (Course 4 - Instructor 2)
+    const quiz4 = await Quiz.create({
+      courseId: course4._id,
+      moduleId: mod4_1._id,
+      instructorId: instructor2._id,
+      title: 'Quiz 1: Containerization & Cloud Native Architecture',
+      description: 'Evaluate container best practices, Dockerfile efficiency, and container orchestration.',
+      durationMinutes: 15,
+      passingScore: 60,
+      totalMarks: 3,
+      status: 'published'
+    });
+
+    const q4_1 = await Question.create({
+      quizId: quiz4._id,
+      questionText: 'What is the primary benefit of multi-stage Docker builds?',
+      options: [
+        'Enabling automatic cluster load balancing',
+        'Reducing production image size by separating build tools from the final runtime image',
+        'Providing unlimited container RAM memory',
+        'Encrypting the root filesystem at rest'
+      ],
+      correctAnswerIndex: 1,
+      explanation: 'Multi-stage builds leave compiler tools, linters, and build caches out of the production runtime image.',
+      marks: 1,
+      order: 1
+    });
+
+    await Question.create({
+      quizId: quiz4._id,
+      questionText: 'Which Docker Compose instruction guarantees an internal dependency starts only after a service passes its health check?',
+      options: [
+        'restart: always',
+        'depends_on with condition: service_healthy',
+        'ports: [27017:27017]',
+        'expose: 5000'
+      ],
+      correctAnswerIndex: 1,
+      explanation: 'Using condition: service_healthy under depends_on prevents dependent containers from booting before health checks succeed.',
+      marks: 1,
+      order: 2
+    });
+
     // Student 1 completed Quiz 1 with 100% score
     await QuizAttempt.create({
       quizId: quiz1._id,
@@ -510,6 +884,21 @@ Attached is the OpenAPI specification link and test suite summary: https://githu
       percentage: 100,
       passed: true,
       submittedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+    });
+
+    // Student 1 completed Quiz 4 with 100% score
+    await QuizAttempt.create({
+      quizId: quiz4._id,
+      studentId: student1._id,
+      courseId: course4._id,
+      answers: [
+        { questionId: q4_1._id, selectedOptionIndex: 1, isCorrect: true, marksAwarded: 1 }
+      ],
+      score: 1,
+      totalMarks: 1,
+      percentage: 100,
+      passed: true,
+      submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
     });
 
     console.log('[Seed] Quizzes, Questions, and Attempts seeded successfully.');
@@ -537,6 +926,15 @@ Attached is the OpenAPI specification link and test suite summary: https://githu
       userId: instructor1._id,
       title: 'New Assignment Submission',
       message: 'Emma Watson submitted "Assignment 1: REST API Schema Design".',
+      type: 'assignment_new',
+      link: '/instructor/submissions',
+      isRead: false
+    });
+
+    await Notification.create({
+      userId: instructor2._id,
+      title: 'New Assignment Submission',
+      message: 'Jordan Taylor submitted "Assignment 1: Multi-Stage Docker & Compose Orchestration".',
       type: 'assignment_new',
       link: '/instructor/submissions',
       isRead: false

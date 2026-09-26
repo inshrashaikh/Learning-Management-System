@@ -25,16 +25,22 @@ exports.enrollInCourse = async (req, res, next) => {
 
     // Check duplicate enrollment
     const existing = await Enrollment.findOne({ studentId, courseId });
+    let enrollment;
     if (existing) {
-      return next(new AppError('You are already enrolled in this course', 409));
+      if (existing.status !== 'dropped') {
+        return next(new AppError('You are already enrolled in this course', 409));
+      }
+      existing.status = 'active';
+      existing.enrolledAt = new Date();
+      await existing.save();
+      enrollment = existing;
+    } else {
+      enrollment = await Enrollment.create({
+        studentId,
+        courseId,
+        status: 'active'
+      });
     }
-
-    // Create enrollment
-    const enrollment = await Enrollment.create({
-      studentId,
-      courseId,
-      status: 'active'
-    });
 
     // Create initial Progress tracking document
     let progress = await Progress.findOne({ studentId, courseId });
